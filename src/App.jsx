@@ -3,7 +3,9 @@ import AuthorizationForm from './components/authorizationForm';
 function App() {
 
   return (
-    <AuthorizationForm />
+    <div>
+      <AuthorizationForm />
+    </div>
   );
 }
 

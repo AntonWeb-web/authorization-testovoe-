@@ -4,6 +4,8 @@ import { applyMiddleware } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
 
 import { viewFormReducer } from './viewFormReducer'
+import { authSuccessReducer } from './authSuccessReducer';
+import { authFailureReducer } from './authFailureReducer';
 
 export const initialState = {
     initialValues: {
@@ -15,6 +17,8 @@ export const initialState = {
 
 const rootReducer = combineReducers({
     viewForm: viewFormReducer,
+    authSuccess: authSuccessReducer,
+    authFailure: authFailureReducer,
 })
 
 const store = configureStore({

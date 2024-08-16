@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { authSuccessAction } from '../redux/authSuccessAction'
+import { authFailureAction } from '../redux/authFailureAction'
 
 const requestRegistration = async (props) => {
     const request = 'http://20.205.178.13:8001/registration/'
@@ -14,27 +16,17 @@ const requestRegistration = async (props) => {
         "repeat_password": confirmPassword
     }
 
-    console.log(body)
+    console.log('Начальный бади = ', body)
 
-
-    try {
-        const response = await axios.post(request, body);
-        console.log('Registration successful', response.data);
-        console.log('Data = ', response.data)
-
-        return response.data
+    return async dispatch => {
         axios.post(request, body)
-            .then (response => console.log(response.data))
-    
-    
-    } catch (error) {
-        console.log(error);
-        console.error('Ответ сервера:', error.response.data);
-        console.error('Статус код:', error.response.status);
-
-        return error.response.status
+            .then (response =>
+                dispatch(authSuccessAction(response))
+            )
+            .catch (error => {
+                dispatch(authFailureAction(error.response.status))
+            })
     }
-
 }
 
 export default requestRegistration
