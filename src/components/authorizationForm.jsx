@@ -3,11 +3,17 @@ import { useForm } from '@mantine/form';
 import axios from 'axios'
 import { useState } from 'react';
 import style from '.././App.module.css'
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch, } from 'react-redux';
+import requestRegistration from './requestRegistration';
+import requestLogIn from './requestLogIn';
+import { fetchRequestRegData } from '../redux/requestRegData';
 
 const AuthorizationForm = () => {
     const dispatch = useDispatch()
-    const [isLogin, setIsLogin] = useState(true);
+
+    const [isLogin, setIsLogin] = useState(false);
+    const [responseRegistration, setResponseRegistration] = useState(null)
+    const [responseLogIn, setResponseLogIn] = useState(null)
 
     const form = useForm({
         initialValues: {
@@ -23,56 +29,14 @@ const AuthorizationForm = () => {
         },
     });
 
-    const handleLogin = async (values) => {
-        console.log('Login')
-        const email = values.email
-        const password = values.password
-        console.log(email, password);
-
-        const body = {
-            "email": email,
-            "password": password,
-        }
-
-        console.log(body)
-
-        try {
-            const response = await axios.post('http://20.205.178.13:8001/registration/', body);
-            console.log('Registration successful', response.data);
-            console.log('Data = ', response.data)
-
-        } catch (error) {
-            console.log(error);
-            console.error('Ответ сервера:', error.response.data);
-            console.error('Статус код:', error.response.status);
-        }
+    const handleLogin = (values) => {
+        requestLogIn(values)
     }
 
     const handleRegistration = async (values) => {
-        console.log('Registration')
-        const email = values.email
-        const password = values.password
-        const confirmPassword = values.confirmPassword
-        console.log(email, password);
-
-        const body = {
-            "email": email,
-            "password": password,
-            "repeat_password": confirmPassword
-        }
-
-        console.log(body)
-
-        try {
-            const response = await axios.post('http://20.205.178.13:8001/registration/', body);
-            console.log('Registration successful', response.data);
-            console.log('Data = ', response.data)
-
-        } catch (error) {
-            console.log(error);
-            console.error('Ответ сервера:', error.response.data);
-            console.error('Статус код:', error.response.status);
-        }
+        //const response = requestRegistration(values)
+        //console.log('Ответ = ', response)
+        requestRegistration(values)
     }
 
     const handleSubmit = (values) => {

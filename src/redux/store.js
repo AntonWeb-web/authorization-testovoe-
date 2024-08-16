@@ -1,6 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { viewFormReducer } from './viewFormReducer'
+import { composeWithDevTools } from '@redux-devtools/extension';
+import { applyMiddleware } from '@reduxjs/toolkit';
+import { thunk } from 'redux-thunk';
 
+import { viewFormReducer } from './viewFormReducer'
 
 export const initialState = {
     initialValues: {
@@ -18,6 +21,6 @@ const store = configureStore({
     reducer: {
         rootReducer,
     }
-})
+}, composeWithDevTools(applyMiddleware(thunk)))
 
 export default store
