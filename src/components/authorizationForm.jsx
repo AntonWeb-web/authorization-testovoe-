@@ -1,13 +1,14 @@
-import {    Button, TextInput, PasswordInput, 
-            Paper, Group, Title, Notification, 
-            Loader, Center, Container } from '@mantine/core';
+import {
+    Button, TextInput, PasswordInput,
+    Paper, Group, Title, Notification,
+    Loader, Center
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState, useEffect } from 'react';
 import style from '.././App.module.css'
 import { useSelector, useDispatch, } from 'react-redux';
 import requestRegistration from './requestRegistration';
 import requestLogIn from './requestLogIn';
-import ConfirmEmailForm from './confirmEmailForm';
 
 const AuthorizationForm = () => {
     const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const AuthorizationForm = () => {
         validate: {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Неверный адрес электронной почты'),
             password: (value) => (value.length >= 8 ? null : 'Пароль должен содержать не менее 8 символов'),
-            confirmPassword: (value, values) => {isLogin ? null : (value === values.password ? null : 'Пароли не совпадают')},
+            confirmPassword: (value, values) => { isLogin ? null : (value === values.password ? null : 'Пароли не совпадают') },
         },
     });
 
@@ -39,7 +40,7 @@ const AuthorizationForm = () => {
     }
 
     const handleSubmit = (values) => {
-        setNotification({loading: true})
+        setNotification({ loading: true })
         isLogin ? handleLogin(values) : handleRegistration(values)
     };
 
@@ -55,7 +56,7 @@ const AuthorizationForm = () => {
             {notification.visible ? (
                 <Center style={{ marginTop: '20px' }}>
                     <Notification
-                        onClose={() => setNotification({ visible: false, message: ''})}
+                        onClose={() => setNotification({ visible: false, message: '' })}
                         style={{ width: 400 }}
                         color={notification.color}
                         success='true'
@@ -96,7 +97,6 @@ const AuthorizationForm = () => {
                     </Group>
                 </form>
             </Paper>
-            <ConfirmEmailForm />
         </div>
     )
 }

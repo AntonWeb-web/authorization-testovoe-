@@ -14,6 +14,16 @@ export const initialState = {
         message: '',
         color: '',
         loading: false,
+        sendConfirmCode: false,
+    },
+    confirmCodeNotification: {
+        visible: false,
+        message: '',
+        color: '',
+        loading: true,
+    },
+    viewProfilePage: {
+        visible: false,
     },
 }
 
