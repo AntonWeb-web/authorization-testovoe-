@@ -1,6 +1,6 @@
 import axios from "axios";
 import { successConfirmCodeAction } from "../redux/successConfirmCodeAction";
-import { failureConfirmCodeAction } from "../redux/failureConfirmCodeAction";
+import { failureConfirmCodeAction } from "../redux/actions/failureConfirmCodeAction";
 
 
 const requestConfirmCode = async (props) => {

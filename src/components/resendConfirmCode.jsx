@@ -1,5 +1,5 @@
 import axios from "axios"
-import { resendConfirmCodeAction } from "../redux/resendConfirmCodeAction"
+import { resendConfirmCodeAction } from "../redux/actions/resendConfirmCodeAction"
 
 const resendConfirmCode = (props) => {
     const email = props.initialEmail.email

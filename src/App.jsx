@@ -1,5 +1,5 @@
 import Authorization from './components/authComp';
-import ProfilePage from './components/ProfilePage'
+import ProfilePage from './components/profilePage'
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 

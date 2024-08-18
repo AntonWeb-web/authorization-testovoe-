@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { logInSuccesAction } from '../redux/logInSuccessAction'
-import { logInFailureAction } from '../redux/logInFailureAction'
+import { logInSuccesAction } from '../redux/actions/logInSuccessAction'
+import { logInFailureAction } from '../redux/actions/logInFailureAction'
 
 const requestLogIn = async (props) => {
     const request = 'http://20.205.178.13:8001/auth/login/'

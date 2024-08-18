@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { registrationSuccessAction } from '../redux/registrationSuccessAction'
-import { registrationFailureAction } from '../redux/registrationFailureAction'
+import { registrationSuccessAction } from '../redux/actions/registrationSuccessAction'
+import { registrationFailureAction } from '../redux/actions/registrationFailureAction'
 
 const requestRegistration = async (props) => {
     const request = 'http://20.205.178.13:8001/registration/'
