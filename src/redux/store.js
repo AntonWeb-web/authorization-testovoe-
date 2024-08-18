@@ -1,11 +1,7 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore, applyMiddleware } from '@reduxjs/toolkit'
 import { composeWithDevTools } from '@redux-devtools/extension';
-import { applyMiddleware } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
-
-import { viewFormReducer } from './viewFormReducer'
-import { authSuccessReducer } from './authSuccessReducer';
-import { authFailureReducer } from './authFailureReducer';
+import { authReducer } from './authReducer';
 
 export const initialState = {
     initialValues: {
@@ -13,12 +9,16 @@ export const initialState = {
         password: '',
         confirmPassword: '',
     },
+    authNotification: {
+        visible: false,
+        message: '',
+        color: '',
+        loading: false,
+    },
 }
 
 const rootReducer = combineReducers({
-    viewForm: viewFormReducer,
-    authSuccess: authSuccessReducer,
-    authFailure: authFailureReducer,
+    auth: authReducer,
 })
 
 const store = configureStore({

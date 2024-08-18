@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { authSuccessAction } from '../redux/authSuccessAction'
-import { authFailureAction } from '../redux/authFailureAction'
+import { registrationSuccessAction } from '../redux/registrationSuccessAction'
+import { registrationFailureAction } from '../redux/registrationFailureAction'
 
 const requestRegistration = async (props) => {
     const request = 'http://20.205.178.13:8001/registration/'
@@ -21,10 +21,10 @@ const requestRegistration = async (props) => {
     return async dispatch => {
         axios.post(request, body)
             .then (response =>
-                dispatch(authSuccessAction(response))
+                dispatch(registrationSuccessAction(response.data))
             )
             .catch (error => {
-                dispatch(authFailureAction(error.response.status))
+                dispatch(registrationFailureAction(error.response ? error.response.status : null))
             })
     }
 }

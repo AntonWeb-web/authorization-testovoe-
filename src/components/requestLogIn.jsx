@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const requestLogIn = async (props) => {
-    console.log('Login')
+    const request = 'http://20.205.178.13:8001/auth/login/'
+    console.log('LogIn')
     const email = props.email
     const password = props.password
     console.log(email, password);
@@ -11,20 +12,17 @@ const requestLogIn = async (props) => {
         "password": password,
     }
 
-    console.log(body)
+    console.log('Начальный бади = ', body)
 
-    try {
-        const response = await axios.post('http://20.205.178.13:8001/registration/', body);
-        console.log('Registration successful', response.data);
-        console.log('Data = ', response.data)
-
-    } catch (error) {
-        console.log(error);
-        console.error('Ответ сервера:', error.response.data);
-        console.error('Статус код:', error.response.status);
+    return async dispatch => {
+        axios.post(request, body)
+            .then (response => 
+                dispatch()
+            )
+            .catch (
+                dispatch((error.response ? error.response.status : null))
+            )
     }
-
-    return null
 }
 
 export default requestLogIn

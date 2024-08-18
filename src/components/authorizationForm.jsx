@@ -1,6 +1,5 @@
-import { Button, TextInput, PasswordInput, Paper, Group, Title, Notification } from '@mantine/core';
+import { Button, TextInput, PasswordInput, Paper, Group, Title, Notification, Loader, Center } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import axios from 'axios'
 import { useState, useEffect } from 'react';
 import style from '.././App.module.css'
 import { useSelector, useDispatch, } from 'react-redux';
@@ -9,13 +8,11 @@ import requestLogIn from './requestLogIn';
 
 const AuthorizationForm = () => {
     const dispatch = useDispatch()
-    const stateInitialValues = useSelector(state => state.rootReducer.viewForm.initialValues)
-
-    const [failuerNotification, setFailureNotification] = useState({ visible: false, message: ''})
-
+    const stateInitialValues = useSelector(state => state.rootReducer.auth.initialValues)
+    const initialNotification = useSelector(state => state.rootReducer.auth.authNotification)
+    const [notification, setNotification] = useState(initialNotification)
+    
     const [isLogin, setIsLogin] = useState(false);
-    const [responseRegistration, setResponseRegistration] = useState(null)
-    const [responseLogIn, setResponseLogIn] = useState(null)
 
 
     const form = useForm({
@@ -38,14 +35,34 @@ const AuthorizationForm = () => {
     }
 
     const handleSubmit = (values) => {
-        console.log(isLogin)
+        setNotification({loading: true})
         isLogin ? handleLogin(values) : handleRegistration(values)
     };
 
+    useEffect(() => {
+        setNotification(initialNotification)
+        setTimeout(() => {
+            setNotification({ visible: false, message: '' })
+        }, 5000)
+    }, [initialNotification])
+
     return (
         <div>
-            <Paper padding="md" style={{ marginTop: 60 }}>
-                <Title order={2} align="center">{isLogin ? 'Авторизация' : 'Регистрация'}</Title>
+            {notification.visible ? (
+                <Center style={{ marginTop: '20px' }}>
+                    <Notification
+                        onClose={() => setNotification({ visible: false, message: ''})}
+                        style={{ width: 400 }}
+                        color={notification.color}
+                        success='true'
+                    >
+                        {notification.message}
+                    </Notification>
+                </Center>
+            ) : (notification.loading && (<Center style={{ marginTop: '20px' }}><Loader size='xs' variant='oval' /></Center>))}
+
+            <Paper padding="md" style={{ marginTop: 30 }}>
+                <Title order={2} align="center" style={{ marginBottom: '20px' }}>{isLogin ? 'Авторизация' : 'Регистрация'}</Title>
                 <form onSubmit={form.onSubmit(handleSubmit)} className={style.regForm}>
                     <TextInput
                         label="Email"
