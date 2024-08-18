@@ -8,7 +8,7 @@ const requestRegistration = async (props) => {
     const email = props.email
     const password = props.password
     const confirmPassword = props.confirmPassword
-    //console.log(email, password);
+
 
     const body = {
         "email": email,

@@ -1,17 +1,20 @@
-import { Button, TextInput, PasswordInput, Paper, Group, Title, Notification, Loader, Center } from '@mantine/core';
+import {    Button, TextInput, PasswordInput, 
+            Paper, Group, Title, Notification, 
+            Loader, Center, Container } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState, useEffect } from 'react';
 import style from '.././App.module.css'
 import { useSelector, useDispatch, } from 'react-redux';
 import requestRegistration from './requestRegistration';
 import requestLogIn from './requestLogIn';
+import ConfirmEmailForm from './confirmEmailForm';
 
 const AuthorizationForm = () => {
     const dispatch = useDispatch()
     const stateInitialValues = useSelector(state => state.rootReducer.auth.initialValues)
     const initialNotification = useSelector(state => state.rootReducer.auth.authNotification)
     const [notification, setNotification] = useState(initialNotification)
-    
+
     const [isLogin, setIsLogin] = useState(false);
 
 
@@ -21,12 +24,13 @@ const AuthorizationForm = () => {
         validate: {
             email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Неверный адрес электронной почты'),
             password: (value) => (value.length >= 8 ? null : 'Пароль должен содержать не менее 8 символов'),
-            confirmPassword: (value, values) => (value === values.password ? null : 'Пароли не совпадают'),
+            confirmPassword: (value, values) => {isLogin ? null : (value === values.password ? null : 'Пароли не совпадают')},
         },
     });
 
-    const handleLogin = (values) => {
-        requestLogIn(values)
+    const handleLogin = async (values) => {
+        const req = await requestLogIn(values)
+        dispatch(req)
     }
 
     const handleRegistration = async (values) => {
@@ -92,6 +96,7 @@ const AuthorizationForm = () => {
                     </Group>
                 </form>
             </Paper>
+            <ConfirmEmailForm />
         </div>
     )
 }

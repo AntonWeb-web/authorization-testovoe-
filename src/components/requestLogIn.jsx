@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { logInSuccesAction } from '../redux/logInSuccessAction'
+import { logInFailureAction } from '../redux/logInFailureAction'
 
 const requestLogIn = async (props) => {
     const request = 'http://20.205.178.13:8001/auth/login/'
@@ -16,12 +18,12 @@ const requestLogIn = async (props) => {
 
     return async dispatch => {
         axios.post(request, body)
-            .then (response => 
-                dispatch()
+            .then(response =>
+                dispatch(logInSuccesAction(response.data))
             )
-            .catch (
-                dispatch((error.response ? error.response.status : null))
-            )
+            .catch(error => {
+                dispatch(logInFailureAction(error.response ? error.response.status : null))
+            })
     }
 }
 
